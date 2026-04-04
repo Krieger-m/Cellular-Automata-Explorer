@@ -33,7 +33,11 @@ export const Rules: Record<string, AutomataRule> = {
     states: 2,
     colors: ["#111111", "#00d4ff"],
     calculate: (current, neighbors) =>
-      neighbors === 3 || (current === 1 && neighbors === 2) || (current === 0 && neighbors === 6) ? 1 : 0,
+      neighbors === 3 ||
+      (current === 1 && neighbors === 2) ||
+      (current === 0 && neighbors === 6)
+        ? 1
+        : 0,
   },
   custom: {
     name: "Custom Labyrith set",
@@ -41,7 +45,13 @@ export const Rules: Record<string, AutomataRule> = {
     states: 2,
     colors: ["#111111", "#ffbb00"],
     calculate: (current, neighbors) =>
-      current === 1 ? (neighbors === 2 || neighbors === 3 ? 1 : 0) : (neighbors === 1 ? 1 : 0),
+      current === 1
+        ? neighbors === 2 || neighbors === 3
+          ? 1
+          : 0
+        : neighbors === 1
+          ? 1
+          : 0,
   },
   coral: {
     name: "Coral Growth",
@@ -144,18 +154,85 @@ export const Rules: Record<string, AutomataRule> = {
   },
   daynight: {
     name: "Day & Night",
-    description: "B3678/S34678. A symmetric rule where dead and alive cells behave similarly.",
+    description:
+      "B3678/S34678. A symmetric rule where dead and alive cells behave similarly.",
     states: 2,
     colors: ["#111111", "#ffffff"],
     calculate: (current, neighbors) =>
-      neighbors === 3 || neighbors >= 6 || (current === 1 && neighbors === 4) ? 1 : 0,
+      neighbors === 3 || neighbors >= 6 || (current === 1 && neighbors === 4)
+        ? 1
+        : 0,
   },
   walledcities: {
     name: "Walled Cities",
-    description: "B45678/S2345. Creates dense, square structures that look like fortresses.",
+    description:
+      "B45678/S2345. Creates dense, square structures that look like fortresses.",
     states: 2,
     colors: ["#111111", "#9dff00"],
     calculate: (current, neighbors) =>
-      current === 1 ? (neighbors >= 2 && neighbors <= 5 ? 1 : 0) : (neighbors >= 4 ? 1 : 0),
+      current === 1
+        ? neighbors >= 2 && neighbors <= 5
+          ? 1
+          : 0
+        : neighbors >= 4
+          ? 1
+          : 0,
+  },
+  fire: {
+    name: "Fire Spread",
+    description: "Burning cells ignite trees. Empty space regrows trees spontaneously.",
+    states: 3,
+    colors: ["#111111", "#22aa22", "#ff3300"], // ash, tree, burning
+    calculate: (current, neighbors) =>
+      current === 1 ? (neighbors >= 1 ? 2 : 1) : 
+      current === 2 ? 0 : 
+      (neighbors === 3 ? 1 : 0),
+  },
+  amoeba: {
+    name: "Amoeba",
+    description: "Life-like rule B357/S1358. Produces shifting, organic blobs.",
+    states: 2,
+    colors: ["#111111", "#ff55ff"],
+    calculate: (current, neighbors) => {
+      const birth = neighbors === 3 || neighbors === 5 || neighbors === 7;
+      const survive =
+        neighbors === 1 ||
+        neighbors === 3 ||
+        neighbors === 5 ||
+        neighbors === 8;
+      return birth || (current === 1 && survive) ? 1 : 0;
+    },
+  },
+  maze: {
+    name: "Maze",
+    description:
+      "B3/S12345. Generates stable maze-like patterns and corridors.",
+    states: 2,
+    colors: ["#111111", "#00ffaa"],
+    calculate: (current, neighbors) => {
+      const birth = neighbors === 3;
+      const survive = neighbors >= 1 && neighbors <= 5;
+      return birth || (current === 1 && survive) ? 1 : 0;
+    },
+  },
+  assimilation: {
+    name: "Assimilation",
+    description: "B345/S4567. Creates very stable, organic 'blobs' that slowly merge and move.",
+    states: 2,
+    colors: ["#111111", "#66ffcc"],
+    calculate: (current, neighbors) =>
+      current === 1
+        ? (neighbors >= 4 && neighbors <= 7 ? 1 : 0)
+        : (neighbors >= 3 && neighbors <= 5 ? 1 : 0),
+  },
+  starwars: {
+    name: "Star Wars",
+    description: "B2/S345 with 4 states. Produces chaotic, high-speed 'spaceships' and complex structures.",
+    states: 4,
+    colors: ["#111111", "#ffffff", "#0088ff", "#004488"],
+    calculate: (current, neighbors) =>
+      current === 0 && neighbors === 2 ? 1 :
+      current === 1 ? (neighbors >= 3 && neighbors <= 5 ? 1 : 2) :
+      current >= 2 ? (current + 1) % 4 : 0,
   },
 };
