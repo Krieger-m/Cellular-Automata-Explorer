@@ -1,5 +1,5 @@
 .page {
-  --background: #0a0a0a;
+  /* --background: #151515; */
   --foreground: #ededed;
 
   --text-primary: #fff;
@@ -16,6 +16,7 @@
   justify-content: center;
   font-family: var(--font-geist-sans);
   background-color: var(--background);
+  padding: 0% 5% 0% 5%;;
 }
 
 .main {
@@ -120,23 +121,5 @@ a.secondary {
     font-size: 32px;
     line-height: 40px;
     letter-spacing: -1.92px;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  .logo {
-    filter: invert();
-  }
-
-  .page {
-    --background: #000;
-    --foreground: #000;
-
-    --text-primary: #ededed;
-    --text-secondary: #999;
-
-    --button-primary-hover: #ccc;
-    --button-secondary-hover: #1a1a1a;
-    --button-secondary-border: #1a1a1a;
   }
 }
