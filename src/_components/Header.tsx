@@ -1,7 +1,9 @@
+import styles from './styles/components.module.css'
+
 export function Header() {
   return (
     <>
-      <nav style={{ border: "1px solid grey", padding: 20 }}>
+      <nav className={styles.header} >
         <h1>Cellular Automata Explorer</h1>
       </nav>
     </>
