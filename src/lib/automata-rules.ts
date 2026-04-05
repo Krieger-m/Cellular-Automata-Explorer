@@ -27,6 +27,23 @@ export const Rules: Record<string, AutomataRule> = {
       return current === 0 && neighbors === 2 ? 1 : 0;
     },
   },
+  starwars: {
+    name: "Star Wars",
+    description:
+      "B2/S345 with 4 states. Produces chaotic, high-speed 'spaceships' and complex structures.",
+    states: 4,
+    colors: ["#111111", "#ffffff", "#0088ff", "#004488"],
+    calculate: (current, neighbors) =>
+      current === 0 && neighbors === 2
+        ? 1
+        : current === 1
+          ? neighbors >= 3 && neighbors <= 5
+            ? 1
+            : 2
+          : current >= 2
+            ? (current + 1) % 4
+            : 0,
+  },
   highlife: {
     name: "HighLife",
     description: "Similar to Conway but with B36/S23.",
@@ -40,7 +57,7 @@ export const Rules: Record<string, AutomataRule> = {
         : 0,
   },
   custom: {
-    name: "Custom Labyrith set",
+    name: "Labyrith set",
     description: "experimental labyrith rule-set",
     states: 2,
     colors: ["#111111", "#ffbb00"],
@@ -180,13 +197,20 @@ export const Rules: Record<string, AutomataRule> = {
   },
   fire: {
     name: "Fire Spread",
-    description: "Burning cells ignite trees. Empty space regrows trees spontaneously.",
+    description:
+      "Burning cells ignite trees. Empty space regrows trees spontaneously.",
     states: 3,
     colors: ["#111111", "#22aa22", "#ff3300"], // ash, tree, burning
     calculate: (current, neighbors) =>
-      current === 1 ? (neighbors >= 1 ? 2 : 1) : 
-      current === 2 ? 0 : 
-      (neighbors === 3 ? 1 : 0),
+      current === 1
+        ? neighbors >= 1
+          ? 2
+          : 1
+        : current === 2
+          ? 0
+          : neighbors === 3
+            ? 1
+            : 0,
   },
   amoeba: {
     name: "Amoeba",
@@ -217,22 +241,35 @@ export const Rules: Record<string, AutomataRule> = {
   },
   assimilation: {
     name: "Assimilation",
-    description: "B345/S4567. Creates very stable, organic 'blobs' that slowly merge and move.",
+    description:
+      "B345/S4567. Creates very stable, organic 'blobs' that slowly merge and move.",
     states: 2,
     colors: ["#111111", "#66ffcc"],
     calculate: (current, neighbors) =>
       current === 1
-        ? (neighbors >= 4 && neighbors <= 7 ? 1 : 0)
-        : (neighbors >= 3 && neighbors <= 5 ? 1 : 0),
+        ? neighbors >= 4 && neighbors <= 7
+          ? 1
+          : 0
+        : neighbors >= 3 && neighbors <= 5
+          ? 1
+          : 0,
   },
-  starwars: {
-    name: "Star Wars",
-    description: "B2/S345 with 4 states. Produces chaotic, high-speed 'spaceships' and complex structures.",
-    states: 4,
-    colors: ["#111111", "#ffffff", "#0088ff", "#004488"],
+  spaceships: {
+    name: "Spaceships",
+    description: "Produces high-speed spaceships and other complex structures.",
+    states: 5,
+    colors: ["#111111", "#a3a3a3", "#aa00ff", "#680088", "#075400"],
     calculate: (current, neighbors) =>
-      current === 0 && neighbors === 2 ? 1 :
-      current === 1 ? (neighbors >= 3 && neighbors <= 5 ? 1 : 2) :
-      current >= 2 ? (current + 1) % 4 : 0,
+      current === 0 && neighbors === 2
+        ? 1
+        : current === 1
+          ? neighbors >= 3 && neighbors <= 5
+            ? 1
+            : 2
+          : current >= 2
+            ? (current + 1) % 4
+            : current >= 3
+              ? (current + 2) % 5
+              : 0,
   },
 };
