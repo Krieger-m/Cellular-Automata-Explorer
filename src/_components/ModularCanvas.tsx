@@ -15,11 +15,13 @@ export function ModularCanvas({ width = 1000, height = 600, cellSize = 6, ruleKe
   const requestRef = useRef<number>(0);
   const currentRule = Rules[ruleKey];
 
+  const density = currentRule.density ?? 0.85
+
   const cols = Math.floor(width / cellSize);
   const rows = Math.floor(height / cellSize);
   const gridRef = useRef<number[][]>(
     Array.from({ length: rows }, () => 
-      Array.from({ length: cols }, () => (Math.random() > 0.85 ? 1 : 0))
+      Array.from({ length: cols }, () => (Math.random() > density ? 1 : 0))
     )
   );
 

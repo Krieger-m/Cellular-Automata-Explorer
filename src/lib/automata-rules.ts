@@ -5,6 +5,7 @@ export interface AutomataRule {
   description: string;
   calculate: RuleFunction;
   states: number; // e.g., 2 for binary (alive/dead)
+  density?: number;
   colors: string[]; // Color mapping for each state
 }
 
@@ -22,6 +23,7 @@ export const Rules: Record<string, AutomataRule> = {
     description:
       "Cells are born if they have exactly 2 neighbors. Everything else dies.",
     states: 2,
+    density: 0.23,
     colors: ["#111111", "#ff0099"],
     calculate: (current, neighbors) => {
       return current === 0 && neighbors === 2 ? 1 : 0;
@@ -74,6 +76,7 @@ export const Rules: Record<string, AutomataRule> = {
     name: "Coral Growth",
     description: "Organic creeping patterns. Birth on 3, survival on 4–8.",
     states: 2,
+    density: 0.91,
     colors: ["#111111", "#ff6600"],
     calculate: (current, neighbors) =>
       neighbors === 3 || (current === 1 && neighbors >= 4) ? 1 : 0,
@@ -92,6 +95,7 @@ export const Rules: Record<string, AutomataRule> = {
     description:
       "Each state is replaced by the next if enough neighbors have that next state.",
     states: 8,
+    density: 0.88,
     colors: [
       "#111111",
       "#ff0000",
@@ -114,6 +118,7 @@ export const Rules: Record<string, AutomataRule> = {
     description:
       "Simplified Wireworld behavior: electrons move through conductive paths.",
     states: 4,
+    density: 0.74,
     colors: ["#111111", "#ffff00", "#ff8800", "#0000ff"], // empty, conductor, tail, head
     calculate: (current, neighbors) => {
       // neighbors = number of HEAD neighbors
@@ -147,6 +152,7 @@ export const Rules: Record<string, AutomataRule> = {
     description:
       "Diffusion-limited crystal growth. Cells freeze when near frozen neighbors.",
     states: 2,
+    density: 0.999,
     colors: ["#111111", "#99ddff"],
     calculate: (current, neighbors) => {
       // If a cell has at least 1 frozen neighbor, it freezes.
@@ -159,6 +165,7 @@ export const Rules: Record<string, AutomataRule> = {
     description:
       "Excitable growth with slow decay, forming vein-like networks.",
     states: 4,
+    density: 0.9,
     colors: ["#111111", "#55ff55", "#33aa33", "#116611"], // off → active → fading → faint
     calculate: (current, neighbors) => {
       // neighbors = number of ACTIVE neighbors (state 1)
@@ -180,11 +187,32 @@ export const Rules: Record<string, AutomataRule> = {
         ? 1
         : 0,
   },
+  daynight2: {
+    name: "Day & Night 2",
+    description: "B3678/S34678. Symmetric rule where Day and Night are duals.",
+    states: 2,
+    density: 0.5,
+    colors: ["#111111", "#ffffff"],
+    calculate: (current, neighbors) => {
+      const isAlive = current === 1;
+      // Birth rules: 3, 6, 7, 8
+      // Survival rules: 3, 4, 6, 7, 8
+      const birth = [3, 6, 7, 8];
+      const survival = [3, 4, 6, 7, 8];
+
+      if (isAlive) {
+        return survival.includes(neighbors) ? 1 : 0;
+      } else {
+        return birth.includes(neighbors) ? 1 : 0;
+      }
+    },
+  },
   walledcities: {
     name: "Walled Cities",
     description:
       "B45678/S2345. Creates dense, square structures that look like fortresses.",
     states: 2,
+    density: 0.8,
     colors: ["#111111", "#9dff00"],
     calculate: (current, neighbors) =>
       current === 1
@@ -200,6 +228,7 @@ export const Rules: Record<string, AutomataRule> = {
     description:
       "Burning cells ignite trees. Empty space regrows trees spontaneously.",
     states: 3,
+    density: 0.55,
     colors: ["#111111", "#22aa22", "#ff3300"], // ash, tree, burning
     calculate: (current, neighbors) =>
       current === 1
@@ -216,6 +245,7 @@ export const Rules: Record<string, AutomataRule> = {
     name: "Amoeba",
     description: "Life-like rule B357/S1358. Produces shifting, organic blobs.",
     states: 2,
+    density: 0.89,
     colors: ["#111111", "#ff55ff"],
     calculate: (current, neighbors) => {
       const birth = neighbors === 3 || neighbors === 5 || neighbors === 7;
@@ -232,6 +262,7 @@ export const Rules: Record<string, AutomataRule> = {
     description:
       "B3/S12345. Generates stable maze-like patterns and corridors.",
     states: 2,
+    density: 0.05,
     colors: ["#111111", "#00ffaa"],
     calculate: (current, neighbors) => {
       const birth = neighbors === 3;
@@ -244,6 +275,7 @@ export const Rules: Record<string, AutomataRule> = {
     description:
       "B345/S4567. Creates very stable, organic 'blobs' that slowly merge and move.",
     states: 2,
+    density: 0.83,
     colors: ["#111111", "#66ffcc"],
     calculate: (current, neighbors) =>
       current === 1
@@ -258,6 +290,7 @@ export const Rules: Record<string, AutomataRule> = {
     name: "Spaceships",
     description: "Produces high-speed spaceships and other complex structures.",
     states: 5,
+    density: 0.6,
     colors: ["#111111", "#a3a3a3", "#aa00ff", "#680088", "#075400"],
     calculate: (current, neighbors) =>
       current === 0 && neighbors === 2
