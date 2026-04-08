@@ -7,6 +7,8 @@ export interface AutomataRule {
   states: number; // e.g., 2 for binary (alive/dead)
   density?: number;
   colors: string[]; // Color mapping for each state
+  neighborFilter?: (state: number, current: number) => boolean;
+  targetFps?: number; // Optional target updates per second
 }
 
 export const Rules: Record<string, AutomataRule> = {
@@ -23,9 +25,10 @@ export const Rules: Record<string, AutomataRule> = {
     description:
       "Cells are born if they have exactly 2 neighbors. Everything else dies.",
     states: 2,
-    density: 0.23,
+    density: 0.24, // Adjusted to represent chance of being ALIVE
     colors: ["#111111", "#ff0099"],
     calculate: (current, neighbors) => {
+      // Birth on 2, No survival
       return current === 0 && neighbors === 2 ? 1 : 0;
     },
   },
@@ -35,16 +38,15 @@ export const Rules: Record<string, AutomataRule> = {
       "B2/S345 with 4 states. Produces chaotic, high-speed 'spaceships' and complex structures.",
     states: 4,
     colors: ["#111111", "#ffffff", "#0088ff", "#004488"],
-    calculate: (current, neighbors) =>
-      current === 0 && neighbors === 2
-        ? 1
-        : current === 1
-          ? neighbors >= 3 && neighbors <= 5
-            ? 1
-            : 2
-          : current >= 2
-            ? (current + 1) % 4
-            : 0,
+    calculate: (current, neighbors) => {
+      if (current === 0) return neighbors === 2 ? 1 : 0; // Birth
+      if (current === 1) {
+        // Survival
+        return neighbors >= 3 && neighbors <= 5 ? 1 : 2;
+      }
+      // Decay for states 2 and 3
+      return (current + 1) % 4;
+    },
   },
   highlife: {
     name: "HighLife",
@@ -76,7 +78,7 @@ export const Rules: Record<string, AutomataRule> = {
     name: "Coral Growth",
     description: "Organic creeping patterns. Birth on 3, survival on 4–8.",
     states: 2,
-    density: 0.91,
+    density: 0.89,
     colors: ["#111111", "#ff6600"],
     calculate: (current, neighbors) =>
       neighbors === 3 || (current === 1 && neighbors >= 4) ? 1 : 0,
@@ -95,7 +97,8 @@ export const Rules: Record<string, AutomataRule> = {
     description:
       "Each state is replaced by the next if enough neighbors have that next state.",
     states: 8,
-    density: 0.88,
+    targetFps: 30, // Throttled to make spirals readable
+    density: 0.1, // Full grid (low density of 0s) is required for wave propagation
     colors: [
       "#111111",
       "#ff0000",
@@ -106,9 +109,9 @@ export const Rules: Record<string, AutomataRule> = {
       "#0000ff",
       "#ff00ff",
     ],
+    neighborFilter: (state, current) => state === (current + 1) % 8,
     calculate: (current, neighborsNext) => {
-      // neighborsNext = number of neighbors in (current + 1) % states
-      const threshold = 3;
+      const threshold = 1; // Lower threshold creates more chaotic, faster spirals
       const next = (current + 1) % 8;
       return neighborsNext >= threshold ? next : current;
     },
@@ -118,10 +121,11 @@ export const Rules: Record<string, AutomataRule> = {
     description:
       "Simplified Wireworld behavior: electrons move through conductive paths.",
     states: 4,
+    targetFps: 15, // Significantly slower to see signal propagation
     density: 0.74,
     colors: ["#111111", "#ffff00", "#ff8800", "#0000ff"], // empty, conductor, tail, head
+    neighborFilter: (state) => state === 3, // Only count "HEAD" neighbors
     calculate: (current, neighbors) => {
-      // neighbors = number of HEAD neighbors
       switch (current) {
         case 3: // HEAD → TAIL
           return 2;
@@ -167,8 +171,8 @@ export const Rules: Record<string, AutomataRule> = {
     states: 4,
     density: 0.9,
     colors: ["#111111", "#55ff55", "#33aa33", "#116611"], // off → active → fading → faint
+    neighborFilter: (state) => state === 1, // Only count "ACTIVE" neighbors
     calculate: (current, neighbors) => {
-      // neighbors = number of ACTIVE neighbors (state 1)
       if (current === 0 && neighbors >= 2) return 1; // activation
       if (current === 1) return 2; // active → fading
       if (current === 2) return 3; // fading → faint
@@ -194,16 +198,12 @@ export const Rules: Record<string, AutomataRule> = {
     density: 0.5,
     colors: ["#111111", "#ffffff"],
     calculate: (current, neighbors) => {
-      const isAlive = current === 1;
-      // Birth rules: 3, 6, 7, 8
-      // Survival rules: 3, 4, 6, 7, 8
-      const birth = [3, 6, 7, 8];
-      const survival = [3, 4, 6, 7, 8];
-
-      if (isAlive) {
-        return survival.includes(neighbors) ? 1 : 0;
+      if (current === 1) {
+        // Survival: 3, 4, 6, 7, 8
+        return neighbors === 3 || neighbors === 4 || neighbors >= 6 ? 1 : 0;
       } else {
-        return birth.includes(neighbors) ? 1 : 0;
+        // Birth: 3, 6, 7, 8
+        return neighbors === 3 || neighbors >= 6 ? 1 : 0;
       }
     },
   },
@@ -226,20 +226,28 @@ export const Rules: Record<string, AutomataRule> = {
   fire: {
     name: "Fire Spread",
     description:
-      "Burning cells ignite trees. Empty space regrows trees spontaneously.",
-    states: 3,
-    density: 0.55,
-    colors: ["#111111", "#22aa22", "#ff3300"], // ash, tree, burning
-    calculate: (current, neighbors) =>
-      current === 1
-        ? neighbors >= 1
-          ? 2
-          : 1
-        : current === 2
-          ? 0
-          : neighbors === 3
-            ? 1
-            : 0,
+      "Burning cells ignite trees. Smoldering cells become ash. Empty space regrows trees spontaneously.",
+    states: 4, // Increased states to 4
+    targetFps: 12, // Slowed down significantly for observation
+    density: 0.2, // Keep density low for less initial chaos
+    // Tree (1) counts Burning (2) neighbors. Ash (0) counts Tree (1) neighbors for regrowth.
+    neighborFilter: (state, current) =>
+      current === 1 ? state === 2 : state === 1,
+    colors: ["#111111", "#22aa22", "#ff3300", "#884400"], // ash, tree, burning, smoldering
+    calculate: (current, neighbors) => {
+      switch (current) {
+        case 0: // Ash regrows to Tree
+          return Math.random() > 0.98 ? 1 : 0; // Spontaneous regrowth is much slower
+        case 1: // Tree becomes Burning
+          return neighbors >= 1 && neighbors <= 4 ? 2 : 1; // Spread condition
+        case 2: // Burning becomes Smoldering
+          return 3;
+        case 3: // Smoldering becomes Ash
+          return 0;
+        default:
+          return 0;
+      }
+    },
   },
   amoeba: {
     name: "Amoeba",
@@ -291,18 +299,26 @@ export const Rules: Record<string, AutomataRule> = {
     description: "Produces high-speed spaceships and other complex structures.",
     states: 5,
     density: 0.6,
-    colors: ["#111111", "#a3a3a3", "#aa00ff", "#680088", "#075400"],
-    calculate: (current, neighbors) =>
-      current === 0 && neighbors === 2
-        ? 1
-        : current === 1
-          ? neighbors >= 3 && neighbors <= 5
-            ? 1
-            : 2
-          : current >= 2
-            ? (current + 1) % 4
-            : current >= 3
-              ? (current + 2) % 5
-              : 0,
+    colors: ["#111111", "#a3a3a3", "#aa00ff", "#680088"],
+    calculate: (current, neighbors) => {
+      if (current === 0) return neighbors === 2 ? 1 : 0;
+      if (current === 1) return neighbors >= 3 && neighbors <= 5 ? 1 : 2;
+      if (current === 2) return 3;
+      if (current === 3) return 4;
+      return 0;
+    },
+  },
+  test: {
+    name: "test",
+    description: "test structure",
+    states: 2,
+    density: 0.5,
+    colors: ["#111111", "#680088"],
+    calculate: (current, neighbors) => {
+      if (current === 0 && (neighbors === 4 || neighbors === 6)) {
+        return 1;
+      }
+      return 0;
+    },
   },
 };
