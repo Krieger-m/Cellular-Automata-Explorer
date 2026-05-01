@@ -48,6 +48,22 @@ export const Rules: Record<string, AutomataRule> = {
       return (current + 1) % 4;
     },
   },
+  amoeba: {
+    name: "Amoeba",
+    description: "Life-like rule B357/S1358. Produces shifting, organic blobs.",
+    states: 2,
+    density: 0.89,
+    colors: ["#111111", "#ff55ff"],
+    calculate: (current, neighbors) => {
+      const birth = neighbors === 3 || neighbors === 5 || neighbors === 7;
+      const survive =
+        neighbors === 1 ||
+        neighbors === 3 ||
+        neighbors === 5 ||
+        neighbors === 8;
+      return birth || (current === 1 && survive) ? 1 : 0;
+    },
+  },
   highlife: {
     name: "HighLife",
     description: "Similar to Conway but with B36/S23.",
@@ -116,28 +132,7 @@ export const Rules: Record<string, AutomataRule> = {
       return neighborsNext >= threshold ? next : current;
     },
   },
-  wireish: {
-    name: "Wireworld‑like",
-    description:
-      "Simplified Wireworld behavior: electrons move through conductive paths.",
-    states: 4,
-    targetFps: 15, // Significantly slower to see signal propagation
-    density: 0.74,
-    colors: ["#111111", "#ffff00", "#ff8800", "#0000ff"], // empty, conductor, tail, head
-    neighborFilter: (state) => state === 3, // Only count "HEAD" neighbors
-    calculate: (current, neighbors) => {
-      switch (current) {
-        case 3: // HEAD → TAIL
-          return 2;
-        case 2: // TAIL → CONDUCTOR
-          return 1;
-        case 1: // CONDUCTOR → HEAD if 1 or 2 head neighbors
-          return neighbors === 1 || neighbors === 2 ? 3 : 1;
-        default: // EMPTY stays EMPTY
-          return 0;
-      }
-    },
-  },
+
   briansbrain: {
     name: "Brian's Brain‑like",
     description:
@@ -180,19 +175,19 @@ export const Rules: Record<string, AutomataRule> = {
       return 0;
     },
   },
-  daynight: {
-    name: "Day & Night",
-    description:
-      "B3678/S34678. A symmetric rule where dead and alive cells behave similarly.",
-    states: 2,
-    colors: ["#111111", "#ffffff"],
-    calculate: (current, neighbors) =>
-      neighbors === 3 || neighbors >= 6 || (current === 1 && neighbors === 4)
-        ? 1
-        : 0,
-  },
+  // daynight: {
+  //   name: "Day & Night",
+  //   description:
+  //     "B3678/S34678. A symmetric rule where dead and alive cells behave similarly.",
+  //   states: 2,
+  //   colors: ["#111111", "#ffffff"],
+  //   calculate: (current, neighbors) =>
+  //     neighbors === 3 || neighbors >= 6 || (current === 1 && neighbors === 4)
+  //       ? 1
+  //       : 0,
+  // },
   daynight2: {
-    name: "Day & Night 2",
+    name: "Day & Night",
     description: "B3678/S34678. Symmetric rule where Day and Night are duals.",
     states: 2,
     density: 0.5,
@@ -249,22 +244,6 @@ export const Rules: Record<string, AutomataRule> = {
       }
     },
   },
-  amoeba: {
-    name: "Amoeba",
-    description: "Life-like rule B357/S1358. Produces shifting, organic blobs.",
-    states: 2,
-    density: 0.89,
-    colors: ["#111111", "#ff55ff"],
-    calculate: (current, neighbors) => {
-      const birth = neighbors === 3 || neighbors === 5 || neighbors === 7;
-      const survive =
-        neighbors === 1 ||
-        neighbors === 3 ||
-        neighbors === 5 ||
-        neighbors === 8;
-      return birth || (current === 1 && survive) ? 1 : 0;
-    },
-  },
   maze: {
     name: "Maze",
     description:
@@ -306,6 +285,28 @@ export const Rules: Record<string, AutomataRule> = {
       if (current === 2) return 3;
       if (current === 3) return 4;
       return 0;
+    },
+  },
+  wireish: {
+    name: "Wireworld‑like",
+    description:
+      "Simplified Wireworld behavior: electrons move through conductive paths.",
+    states: 4,
+    targetFps: 15, // Significantly slower to see signal propagation
+    density: 0.74,
+    colors: ["#111111", "#ffff00", "#ff8800", "#0000ff"], // empty, conductor, tail, head
+    neighborFilter: (state) => state === 3, // Only count "HEAD" neighbors
+    calculate: (current, neighbors) => {
+      switch (current) {
+        case 3: // HEAD → TAIL
+          return 2;
+        case 2: // TAIL → CONDUCTOR
+          return 1;
+        case 1: // CONDUCTOR → HEAD if 1 or 2 head neighbors
+          return neighbors === 1 || neighbors === 2 ? 3 : 1;
+        default: // EMPTY stays EMPTY
+          return 0;
+      }
     },
   },
   test: {
