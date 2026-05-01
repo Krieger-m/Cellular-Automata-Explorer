@@ -25,11 +25,13 @@ export default function Home() {
       </p>
       <Spacing height={4} />
 
-      <div style={{display: 'flex', flexDirection: 'column', rowGap: "1em", textAlign: 'center' }}>
+      <div className={styles.cardsDiv} >
       {Object.entries(Rules).map(([key, rule]) => (
-          <Link key={key} href={`/${key}`} >
-            {rule.name}
-          </Link>
+          <div key={key} className={styles.singleCardsDiv}>
+            <Link  href={`/${key}`} >
+              {rule.name}
+            </Link>
+          </div>
       ))}
       </div>
       <Spacing height={2} />
