@@ -175,19 +175,19 @@ export const Rules: Record<string, AutomataRule> = {
       return 0;
     },
   },
-  // daynight: {
-  //   name: "Day & Night",
-  //   description:
-  //     "B3678/S34678. A symmetric rule where dead and alive cells behave similarly.",
-  //   states: 2,
-  //   colors: ["#111111", "#ffffff"],
-  //   calculate: (current, neighbors) =>
-  //     neighbors === 3 || neighbors >= 6 || (current === 1 && neighbors === 4)
-  //       ? 1
-  //       : 0,
-  // },
-  daynight2: {
+  daynight: {
     name: "Day & Night",
+    description:
+      "B3678/S34678. A symmetric rule where dead and alive cells behave similarly.",
+    states: 2,
+    colors: ["#111111", "#ffffff"],
+    calculate: (current, neighbors) =>
+      neighbors === 3 || neighbors >= 6 || (current === 1 && neighbors === 4)
+        ? 1
+        : 0,
+  },
+  daynight2: {
+    name: "Day & Night 2",
     description: "B3678/S34678. Symmetric rule where Day and Night are duals.",
     states: 2,
     density: 0.5,
