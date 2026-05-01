@@ -175,17 +175,17 @@ export const Rules: Record<string, AutomataRule> = {
       return 0;
     },
   },
-  daynight: {
-    name: "Day & Night",
-    description:
-      "B3678/S34678. A symmetric rule where dead and alive cells behave similarly.",
-    states: 2,
-    colors: ["#111111", "#ffffff"],
-    calculate: (current, neighbors) =>
-      neighbors === 3 || neighbors >= 6 || (current === 1 && neighbors === 4)
-        ? 1
-        : 0,
-  },
+  // daynight: {
+  //   name: "Day & Night",
+  //   description:
+  //     "B3678/S34678. A symmetric rule where dead and alive cells behave similarly.",
+  //   states: 2,
+  //   colors: ["#111111", "#ffffff"],
+  //   calculate: (current, neighbors) =>
+  //     neighbors === 3 || neighbors >= 6 || (current === 1 && neighbors === 4)
+  //       ? 1
+  //       : 0,
+  // },
   daynight2: {
     name: "Day & Night 2",
     description: "B3678/S34678. Symmetric rule where Day and Night are duals.",
@@ -309,17 +309,17 @@ export const Rules: Record<string, AutomataRule> = {
       }
     },
   },
-  test: {
-    name: "test",
-    description: "test structure",
-    states: 2,
-    density: 0.5,
-    colors: ["#111111", "#680088"],
-    calculate: (current, neighbors) => {
-      if (current === 0 && (neighbors === 4 || neighbors === 6)) {
-        return 1;
-      }
-      return 0;
-    },
-  },
+  // test: {
+  //   name: "test",
+  //   description: "test structure",
+  //   states: 2,
+  //   density: 0.5,
+  //   colors: ["#111111", "#680088"],
+  //   calculate: (current, neighbors) => {
+  //     if (current === 0 && (neighbors === 4 || neighbors === 6)) {
+  //       return 1;
+  //     }
+  //     return 0;
+  //   },
+  // },
 };

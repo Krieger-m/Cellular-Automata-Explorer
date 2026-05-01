@@ -147,6 +147,7 @@ a.secondary {
   gap: 10px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   min-width: 260px;
+  max-width: 260px;
   flex: 1 1 160px;
 
   
