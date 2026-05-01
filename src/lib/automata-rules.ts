@@ -1,8 +1,19 @@
+import { StaticImageData } from 'next/image';
+import conwayImage from '../../public/game-of-life.png'
+import seedsImage from '../../public/seeds.png'
+import starsImage from '../../public/stars.png'
+import amoebaImage from '../../public/amoeba.png'
+import labyrinthImage from '../../public/labyrinth.png'
+import highLifeImage from '../../public/automata.png'
+import coralImage from '../../public/coral.png'
+
 export type RuleFunction = (currentState: number, neighbors: number) => number;
+
 
 export interface AutomataRule {
   name: string;
   description: string;
+  image?: StaticImageData;
   calculate: RuleFunction;
   states: number; // e.g., 2 for binary (alive/dead)
   density?: number;
@@ -15,6 +26,7 @@ export const Rules: Record<string, AutomataRule> = {
   conway: {
     name: "Conway's Game of Life",
     description: "Standard B3/S23 rules.",
+    image: conwayImage,
     states: 2,
     colors: ["#111111", "#00ff00"],
     calculate: (current, neighbors) =>
@@ -24,6 +36,7 @@ export const Rules: Record<string, AutomataRule> = {
     name: "Seeds",
     description:
       "Cells are born if they have exactly 2 neighbors. Everything else dies.",
+      image: seedsImage,
     states: 2,
     density: 0.24, // Adjusted to represent chance of being ALIVE
     colors: ["#111111", "#ff0099"],
@@ -37,6 +50,7 @@ export const Rules: Record<string, AutomataRule> = {
     description:
       "B2/S345 with 4 states. Produces chaotic, high-speed 'spaceships' and complex structures.",
     states: 4,
+    image: starsImage,
     colors: ["#111111", "#ffffff", "#0088ff", "#004488"],
     calculate: (current, neighbors) => {
       if (current === 0) return neighbors === 2 ? 1 : 0; // Birth
@@ -52,6 +66,7 @@ export const Rules: Record<string, AutomataRule> = {
     name: "Amoeba",
     description: "Life-like rule B357/S1358. Produces shifting, organic blobs.",
     states: 2,
+    image: amoebaImage,
     density: 0.89,
     colors: ["#111111", "#ff55ff"],
     calculate: (current, neighbors) => {
@@ -68,6 +83,7 @@ export const Rules: Record<string, AutomataRule> = {
     name: "HighLife",
     description: "Similar to Conway but with B36/S23.",
     states: 2,
+    image: highLifeImage,
     colors: ["#111111", "#00d4ff"],
     calculate: (current, neighbors) =>
       neighbors === 3 ||
@@ -80,6 +96,7 @@ export const Rules: Record<string, AutomataRule> = {
     name: "Labyrith set",
     description: "experimental labyrith rule-set",
     states: 2,
+    image: labyrinthImage,
     colors: ["#111111", "#ffbb00"],
     calculate: (current, neighbors) =>
       current === 1
@@ -94,6 +111,7 @@ export const Rules: Record<string, AutomataRule> = {
     name: "Coral Growth",
     description: "Organic creeping patterns. Birth on 3, survival on 4–8.",
     states: 2,
+    image: coralImage,
     density: 0.89,
     colors: ["#111111", "#ff6600"],
     calculate: (current, neighbors) =>

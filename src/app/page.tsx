@@ -2,6 +2,9 @@ import styles from "./styles/page.module.css";
 import Link from "next/link";
 import { Rules } from "@/lib/automata-rules";
 import { Spacing } from "@/_components/Spacing";
+import Image from "next/image";
+import defaultImage from "../../public/automata.png";
+
 
 export default function Home() {
   return (
@@ -27,7 +30,9 @@ export default function Home() {
 
       <div className={styles.cardsDiv} >
       {Object.entries(Rules).map(([key, rule]) => (
-            <Link key={key} className={styles.singleCardsDiv}  href={`/${key}`} >
+        <Link key={key} className={styles.singleCardsDiv}  href={`/${key}`} >
+               
+              <Image src={rule.image?.src || defaultImage.src} alt={rule.name} width={50} height={50}/>
               {rule.name}
             </Link>
       ))}
