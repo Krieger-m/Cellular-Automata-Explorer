@@ -27,11 +27,9 @@ export default function Home() {
 
       <div className={styles.cardsDiv} >
       {Object.entries(Rules).map(([key, rule]) => (
-          <div key={key} className={styles.singleCardsDiv}>
-            <Link  href={`/${key}`} >
+            <Link key={key} className={styles.singleCardsDiv}  href={`/${key}`} >
               {rule.name}
             </Link>
-          </div>
       ))}
       </div>
       <Spacing height={2} />
