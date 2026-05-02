@@ -41,6 +41,16 @@ export default function Home() {
         ))}
       </div>
       <Spacing height={2} />
+      <div className={styles.ctas}>
+        <a
+          className={styles.secondary}
+          href="https://mk-dev.org/"
+          rel="noopener noreferrer"
+        >
+          Back to main-page
+        </a>
+      </div>
+      <Spacing height={2} />
     </div>
   );
 }
