@@ -33,8 +33,8 @@ export default function Home() {
             <Image
               src={rule.image?.src || defaultImage.src}
               alt={rule.name}
-              width={50}
-              height={50}
+              width={70}
+              height={70}
             />
             {rule.name}
           </Link>
