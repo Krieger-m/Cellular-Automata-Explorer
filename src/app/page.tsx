@@ -5,7 +5,6 @@ import { Spacing } from "@/_components/Spacing";
 import Image from "next/image";
 import defaultImage from "../../public/placeholder.png";
 
-
 export default function Home() {
   return (
     <div className={styles.page}>
@@ -28,14 +27,18 @@ export default function Home() {
       </p>
       <Spacing height={4} />
 
-      <div className={styles.cardsDiv} >
-      {Object.entries(Rules).map(([key, rule]) => (
-        <Link key={key} className={styles.singleCardsDiv}  href={`/${key}`} >
-               
-              <Image src={rule.image?.src || defaultImage.src} alt={rule.name} width={50} height={50}/>
-              {rule.name}
-            </Link>
-      ))}
+      <div className={styles.cardsDiv}>
+        {Object.entries(Rules).map(([key, rule]) => (
+          <Link key={key} className={styles.singleCardsDiv} href={`/${key}`}>
+            <Image
+              src={rule.image?.src || defaultImage.src}
+              alt={rule.name}
+              width={50}
+              height={50}
+            />
+            {rule.name}
+          </Link>
+        ))}
       </div>
       <Spacing height={2} />
     </div>
