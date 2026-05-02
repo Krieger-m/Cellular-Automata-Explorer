@@ -1,5 +1,6 @@
 .header {
   border: 1px solid grey;
+  border-radius: 10px;
   padding: 20;
   background-color: #000;
   display: flex;
