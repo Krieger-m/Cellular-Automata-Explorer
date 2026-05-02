@@ -33,13 +33,6 @@ export default async function DynamicPage({
       </div>
       <Spacing height={2}/>
       <div className={styles.ctas}>
-        <Link
-          className={styles.primary}
-          href="/"
-          rel="noopener noreferrer"
-        >
-          Back
-        </Link>
         <a
           className={styles.secondary}
           href={`/${slug}`}
@@ -47,6 +40,13 @@ export default async function DynamicPage({
         >
           Restart
         </a>
+        <Link
+          className={styles.primary}
+          href="/"
+          rel="noopener noreferrer"
+        >
+          Back
+        </Link>
        
       </div>
     </div>
