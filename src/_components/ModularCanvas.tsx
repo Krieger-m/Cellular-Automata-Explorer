@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useEffect, useRef } from "react";
 import { Rules } from "@/lib/automata-rules";
@@ -10,7 +10,12 @@ interface Props {
   ruleKey: keyof typeof Rules;
 }
 
-export function ModularCanvas({ width = 1000, height = 600, cellSize = 6, ruleKey }: Props) {
+export function ModularCanvas({
+  width = 1000,
+  height = 600,
+  cellSize = 6,
+  ruleKey,
+}: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const requestRef = useRef<number>(0);
   const lastUpdateRef = useRef<number>(0);
@@ -80,7 +85,9 @@ export function ModularCanvas({ width = 1000, height = 600, cellSize = 6, ruleKe
             else if (neighborC >= cols) neighborC = 0;
 
             const neighborState = currentGrid[neighborR * cols + neighborC];
-            const isNeighbor = filter ? filter(neighborState, currentState) : neighborState === 1;
+            const isNeighbor = filter
+              ? filter(neighborState, currentState)
+              : neighborState === 1;
             if (isNeighbor) neighbors++;
           }
         }
@@ -124,11 +131,11 @@ export function ModularCanvas({ width = 1000, height = 600, cellSize = 6, ruleKe
   }, [ruleKey]); // Restart loop if rule changes
 
   return (
-    <canvas 
-      ref={canvasRef} 
-      width={width} 
-      height={height} 
-      className="rounded-lg shadow-2xl border border-white/10" 
+    <canvas
+      ref={canvasRef}
+      width={width}
+      height={height}
+      className="rounded-lg shadow-2xl border border-white/10"
     />
   );
 }
