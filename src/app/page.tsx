@@ -44,10 +44,10 @@ export default function Home() {
       <div className={styles.ctas}>
         <a
           className={styles.secondary}
-          href="https://mk-dev.org/"
+          href="https://mk-dev.org/projects"
           rel="noopener noreferrer"
         >
-          Back to main-page
+          Back
         </a>
       </div>
       <Spacing height={2} />
