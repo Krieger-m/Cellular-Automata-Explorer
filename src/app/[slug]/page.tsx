@@ -21,7 +21,7 @@ export default async function DynamicPage({
     <div className={styles.page}>
       <h1>{rule.name}</h1>
 
-      <Spacing height={2} />
+      <Spacing height={4} />
 
       <p>{rule.description}</p>
 
