@@ -334,7 +334,7 @@ export const Rules: Record<string, AutomataRule> = {
     image: wireImage,
     states: 4,
     targetFps: 15, // Significantly slower to see signal propagation
-    density: 0.74,
+    density: 0.75,
     colors: ["#111111", "#ffff00", "#ff8800", "#0000ff"], // empty, conductor, tail, head
     neighborFilter: (state) => state === 3, // Only count "HEAD" neighbors
     calculate: (current, neighbors) => {
