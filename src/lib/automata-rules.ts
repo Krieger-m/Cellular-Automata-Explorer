@@ -269,9 +269,9 @@ export const Rules: Record<string, AutomataRule> = {
     calculate: (current, neighbors) => {
       switch (current) {
         case 0: // Ash regrows to Tree
-          return Math.random() > 0.98 ? 1 : 0; // Spontaneous regrowth is much slower
+          return Math.random() > 0.88 ? 1 : 0; // Spontaneous regrowth is much slower
         case 1: // Tree becomes Burning
-          return neighbors >= 1 && neighbors <= 4 ? 2 : 1; // Spread condition
+          return neighbors >= 1 && neighbors <= 3 ? 2 : 1; // Spread condition
         case 2: // Burning becomes Smoldering
           return 3;
         case 3: // Smoldering becomes Ash
