@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Rules } from "@/lib/automata-rules";
 import { Spacing } from "@/_components/Spacing";
 import Image from "next/image";
-import defaultImage from "../../public/automata.png";
+import defaultImage from "../../public/placeholder.png";
 
 
 export default function Home() {

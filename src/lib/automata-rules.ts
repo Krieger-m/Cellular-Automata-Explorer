@@ -4,8 +4,20 @@ import seedsImage from '../../public/seeds.png'
 import starsImage from '../../public/stars.png'
 import amoebaImage from '../../public/amoeba.png'
 import labyrinthImage from '../../public/labyrinth.png'
-import highLifeImage from '../../public/automata.png'
+import highLifeImage from '../../public/highLife.png'
 import coralImage from '../../public/coral.png'
+import crackleImage from '../../public/crackle.png'
+import cyclicImage from '../../public/cyclic.png'
+import briansImage from '../../public/brians-brain.png'
+import crystalImage from '../../public/crystal.png'
+import slimeImage from '../../public/slime.png'
+import dayNightImage from '../../public/daynight.png'
+import walledImage from '../../public/walledCities.png'
+import fireImage from '../../public/fireSpread.png'
+import mazeImage from '../../public/maze.png'
+import assimilationImage from '../../public/assimilation.png'
+import spaceshipsImage from '../../public/spaceships.png'
+import wireImage from '../../public/wirew.png'
 
 export type RuleFunction = (currentState: number, neighbors: number) => number;
 
@@ -121,6 +133,7 @@ export const Rules: Record<string, AutomataRule> = {
     name: "Crackle",
     description:
       "Chaotic lightning-like activity. Birth on 1, survival on 1–2.",
+    image: crackleImage,
     states: 2,
     colors: ["#111111", "#aaff00"],
     calculate: (current, neighbors) =>
@@ -130,6 +143,7 @@ export const Rules: Record<string, AutomataRule> = {
     name: "Cyclic CA",
     description:
       "Each state is replaced by the next if enough neighbors have that next state.",
+      image: cyclicImage,
     states: 8,
     targetFps: 30, // Throttled to make spirals readable
     density: 0.1, // Full grid (low density of 0s) is required for wave propagation
@@ -155,6 +169,7 @@ export const Rules: Record<string, AutomataRule> = {
     name: "Brian's Brain‑like",
     description:
       "Cells fire if exactly 2 neighbors are firing. Classic excitable medium.",
+      image: briansImage,
     states: 3,
     colors: ["#111111", "#00aaff", "#555555"], // off, firing, refractory
     calculate: (current, neighbors) => {
@@ -168,6 +183,7 @@ export const Rules: Record<string, AutomataRule> = {
     name: "Crystal Growth",
     description:
       "Diffusion-limited crystal growth. Cells freeze when near frozen neighbors.",
+      image: crystalImage,
     states: 2,
     density: 0.999,
     colors: ["#111111", "#99ddff"],
@@ -181,6 +197,7 @@ export const Rules: Record<string, AutomataRule> = {
     name: "Slime Mold",
     description:
       "Excitable growth with slow decay, forming vein-like networks.",
+      image: slimeImage,
     states: 4,
     density: 0.9,
     colors: ["#111111", "#55ff55", "#33aa33", "#116611"], // off → active → fading → faint
@@ -207,6 +224,7 @@ export const Rules: Record<string, AutomataRule> = {
   daynight2: {
     name: "Day & Night 2",
     description: "B3678/S34678. Symmetric rule where Day and Night are duals.",
+    image: dayNightImage,
     states: 2,
     density: 0.5,
     colors: ["#111111", "#ffffff"],
@@ -224,6 +242,7 @@ export const Rules: Record<string, AutomataRule> = {
     name: "Walled Cities",
     description:
       "B45678/S2345. Creates dense, square structures that look like fortresses.",
+      image: walledImage,
     states: 2,
     density: 0.8,
     colors: ["#111111", "#9dff00"],
@@ -240,6 +259,7 @@ export const Rules: Record<string, AutomataRule> = {
     name: "Fire Spread",
     description:
       "Burning cells ignite trees. Smoldering cells become ash. Empty space regrows trees spontaneously.",
+      image: fireImage,
     states: 4, // Increased states to 4
     targetFps: 12, // Slowed down significantly for observation
     density: 0.2, // Keep density low for less initial chaos
@@ -266,6 +286,7 @@ export const Rules: Record<string, AutomataRule> = {
     name: "Maze",
     description:
       "B3/S12345. Generates stable maze-like patterns and corridors.",
+      image: mazeImage,
     states: 2,
     density: 0.05,
     colors: ["#111111", "#00ffaa"],
@@ -279,6 +300,7 @@ export const Rules: Record<string, AutomataRule> = {
     name: "Assimilation",
     description:
       "B345/S4567. Creates very stable, organic 'blobs' that slowly merge and move.",
+      image: assimilationImage,
     states: 2,
     density: 0.83,
     colors: ["#111111", "#66ffcc"],
@@ -294,6 +316,7 @@ export const Rules: Record<string, AutomataRule> = {
   spaceships: {
     name: "Spaceships",
     description: "Produces high-speed spaceships and other complex structures.",
+    image: spaceshipsImage,
     states: 5,
     density: 0.6,
     colors: ["#111111", "#a3a3a3", "#aa00ff", "#680088"],
@@ -309,6 +332,7 @@ export const Rules: Record<string, AutomataRule> = {
     name: "Wireworld‑like",
     description:
       "Simplified Wireworld behavior: electrons move through conductive paths.",
+      image: wireImage,
     states: 4,
     targetFps: 15, // Significantly slower to see signal propagation
     density: 0.74,
