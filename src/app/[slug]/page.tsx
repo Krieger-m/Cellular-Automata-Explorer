@@ -7,7 +7,6 @@ import { Rules } from "@/lib/automata-rules";
 import { notFound } from "next/navigation";
 import { Spacing } from "@/_components/Spacing";
 
-
 export default async function DynamicPage({
   params,
 }: {
@@ -22,16 +21,16 @@ export default async function DynamicPage({
     <div className={styles.page}>
       <h1>{rule.name}</h1>
 
-      <Spacing height={2}/>
-     
-     <p>{rule.description}</p>
+      <Spacing height={2} />
 
-      <Spacing height={2}/>
-      
+      <p>{rule.description}</p>
+
+      <Spacing height={2} />
+
       <div>
         <ModularCanvas ruleKey={slug} />
       </div>
-      <Spacing height={2}/>
+      <Spacing height={2} />
       <div className={styles.ctas}>
         <a
           className={styles.secondary}
@@ -40,14 +39,9 @@ export default async function DynamicPage({
         >
           Restart
         </a>
-        <Link
-          className={styles.primary}
-          href="/"
-          rel="noopener noreferrer"
-        >
+        <Link className={styles.primary} href="/" rel="noopener noreferrer">
           Back
         </Link>
-       
       </div>
     </div>
   );
