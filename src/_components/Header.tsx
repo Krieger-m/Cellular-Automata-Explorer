@@ -16,7 +16,7 @@ export function Header() {
             style={{ borderRadius: 25 }}
           />
         </Link>{" "}
-        <h1>Cellular Automata Explorer</h1>
+        <Link href="/"><h1>Cellular Automata Explorer</h1></Link>
       </nav>
     </>
   );
