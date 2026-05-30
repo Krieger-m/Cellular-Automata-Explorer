@@ -38,7 +38,7 @@ Based on the live explorer, the project currently includes:
 - **Crystal Growth**  
 - **Slime Mold**  
 - **Day & Night**  
-- **2 Walled Cities**  
+- **Walled Cities**  
 - **Fire Spread**  
 - **Maze**  
 - **Assimilation**  
