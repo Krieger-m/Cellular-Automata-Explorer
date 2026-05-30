@@ -1,36 +1,131 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🧬 Cellular Automata Explorer
 
-## Getting Started
+A visual, interactive tool for exploring a curated collection of **cellular automata** — systems where simple rules give rise to surprisingly complex, organic behavior.  
+This project lets you experiment with different automata, tweak parameters, and watch patterns evolve in real time.
 
-First, run the development server:
+## 🌟 Overview
+
+Cellular automata are rule‑based grids where each cell updates based on its neighbors.  
+Despite their simplicity, they produce intricate structures: oscillators, gliders, chaotic fields, crystal‑like growth, and more.
+
+This explorer provides a clean interface to browse, visualize, and understand a variety of well‑known and lesser‑known automata.
+
+## 🧱 Features
+
+- Interactive canvas with smooth rendering  
+- Modular rule system (easy to add new automata)  
+- Click any rule to explore its behavior  
+- Real‑time simulation controls  
+- Responsive UI built with modern web technologies  
+- A curated library of automata with unique dynamics
+
+## 🧬 Included Automata
+
+Based on the live explorer, the project currently includes:
+
+- **Conway’s Game of Life**  
+- **Seeds**  
+- **Star Wars**  
+- **Amoeba**  
+- **HighLife**  
+- **Labyrinth**  
+- **Coral Growth**  
+- **Crackle**  
+- **Cyclic CA**  
+- **Brian’s Brain‑like**  
+- **Crystal Growth**  
+- **Slime Mold**  
+- **Day & Night**  
+- **2 Walled Cities**  
+- **Fire Spread**  
+- **Maze**  
+- **Assimilation**  
+- **Spaceships**  
+- **Wireworld‑like**  
+- …and more
+
+(Each rule has its own personality, visual style, and emergent behavior.)  
+
+
+## 📁 Project Structure
+
+The repository is organized into modular components and rule definitions:
+
+```
+public/
+src/
+  _components/
+    Canvas.tsx
+    ModularCanvas.tsx
+    Header.tsx
+    Navbar.tsx
+    Spacing.tsx
+  app/
+    [slug]/
+      page.tsx
+  icon.png
+  layout.tsx
+  page.tsx
+  styles/
+  lib/
+    automata-rules.ts
+package.json
+tsconfig.json
+next.config.ts
+eslint.config.mjs
+README.md
+```
+
+## 🛠️ Tech Stack
+
+- **Next.js**  
+- **TypeScript**  
+- **React**  
+- **Custom Canvas Rendering**  
+- **Modular rule engine** for defining automata behavior
+
+## 🚀 Getting Started
+
+Clone the repository:
+
+```bash
+git clone https://github.com/Krieger-m/Cellular-Automata-Explorer
+cd Cellular-Automata-Explorer
+```
+Install dependencies:
+
+```bash
+npm install
+```
+Start the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
+Then open:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+```
+http://localhost:3000
+```
+  
+## 🧩 How It Works
+Each automaton is defined by:
+- A neighborhood rule
+- A state transition function
+- Optional coloring logic
+- Optional multi‑state behavior
+- Rules are stored in lib/automata-rules.ts, making it easy to add new ones or modify existing ones.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📦 Deployment
+The project runs in any Node.js environment.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Build and start:
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm run build
+npm start
+```
+  
+## 📜 License
+MIT — feel free to explore, modify, and extend.
+  
