@@ -1,7 +1,9 @@
 # 🧬 Cellular Automata Explorer
 
-A visual, interactive tool for exploring a curated collection of **cellular automata** — systems where simple rules give rise to surprisingly complex, organic behavior.  
+A visual, interactive tool for exploring a curated collection of **cellular automata** systems where simple rules give rise to surprisingly complex, organic behavior.  
 This project lets you experiment with different automata, tweak parameters, and watch patterns evolve in real time.
+
+live version available here: [Cellular-Automata-Explorer](https://automata.mk-dev.org/)
 
 ## 🌟 Overview
 
