@@ -17,7 +17,6 @@ This explorer provides a clean interface to browse, visualize, and understand a 
 - Interactive canvas with smooth rendering  
 - Modular rule system (easy to add new automata)  
 - Click any rule to explore its behavior  
-- Real‑time simulation controls  
 - Responsive UI built with modern web technologies  
 - A curated library of automata with unique dynamics
 
